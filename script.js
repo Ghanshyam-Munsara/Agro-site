@@ -40,6 +40,95 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Hero Slider Functionality
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = slides.length;
+let slideInterval;
+
+function showSlide(index) {
+    // Remove active class from all slides and dots
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Add active class to current slide and dot
+    if (slides[index]) {
+        slides[index].classList.add('active');
+    }
+    if (dots[index]) {
+        dots[index].classList.add('active');
+    }
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    showSlide(currentSlide);
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    showSlide(currentSlide);
+}
+
+function goToSlide(index) {
+    currentSlide = index;
+    showSlide(currentSlide);
+    resetSlider();
+}
+
+function startSlider() {
+    slideInterval = setInterval(nextSlide, 5000); // 5 seconds
+}
+
+function resetSlider() {
+    clearInterval(slideInterval);
+    startSlider();
+}
+
+// Initialize slider
+if (slides.length > 0) {
+    showSlide(0);
+    startSlider();
+    
+    // Navigation arrows
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetSlider();
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetSlider();
+        });
+    }
+    
+    // Navigation dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            goToSlide(index);
+        });
+    });
+    
+    // Pause on hover
+    const sliderSection = document.querySelector('.hero-slider-section');
+    if (sliderSection) {
+        sliderSection.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        sliderSection.addEventListener('mouseleave', () => {
+            startSlider();
+        });
+    }
+}
+
 // Contact form handling
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
