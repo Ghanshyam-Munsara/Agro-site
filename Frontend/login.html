@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superadmin Login - AgroSite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c2a 100%);
+            padding: 2rem 1rem;
+        }
+
+        .login-container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-header .logo-icon {
+            font-size: 3rem;
+            color: #2d5016;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .login-header h1 {
+            color: #2d5016;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .login-form {
+            width: 100%;
+        }
+
+        .login-form .form-group-new {
+            margin-bottom: 1.5rem;
+        }
+
+        .login-form .form-group-new label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: #2d5016;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-form .form-group-new label i {
+            color: #8bc34a;
+        }
+
+        .login-form .form-group-new input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .login-form .form-group-new input:focus {
+            outline: none;
+            border-color: #8bc34a;
+            box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.1);
+        }
+
+        .login-form .btn-submit {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .login-form .btn-submit .btn-icon {
+            font-size: 1rem;
+        }
+
+        .error-message {
+            background-color: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            display: none;
+            border-left: 4px solid #c33;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .login-header h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-container">
+            <div class="login-header">
+                <span class="logo-icon"><i class="fa fa-seedling"></i></span>
+                <h1>Superadmin Login</h1>
+                <p>Enter your credentials to access the admin panel</p>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group-new">
+                    <label for="email">
+                        <i class="fa fa-envelope"></i>
+                        Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="Enter your email address" 
+                        required 
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group-new">
+                    <label for="password">
+                        <i class="fa fa-lock"></i>
+                        Password
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter your password" 
+                        required 
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <span>Login</span>
+                    <span class="btn-icon"><i class="fa fa-arrow-right"></i></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Hide error message
+            errorMessage.classList.remove('show');
+            errorMessage.textContent = '';
+
+            // Basic validation
+            if (!email || !password) {
+                showError('Please fill in all fields');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            // Here you would typically send the data to your backend
+            // For now, we'll just log it
+            console.log('Login attempt:', { email, password });
+            
+            // Simulate login (replace with actual authentication)
+            // Redirect to dashboard after successful login
+            window.location.href = 'dashboard.html';
+        });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+        }
+    </script>
+</body>
+</html>
+
