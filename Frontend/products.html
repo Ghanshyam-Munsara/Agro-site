@@ -8,21 +8,80 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         .products-hero {
-            background: linear-gradient(135deg, #2d5016 0%, #4a7c2a 100%);
-            padding: 4rem 0;
-            text-align: center;
+            position: relative;
             color: #fff;
+            padding: 60px 20px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .products-hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1920&h=1080&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+            animation: backgroundZoom 20s ease-in-out infinite;
+        }
+
+        .products-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(45, 80, 22, 0.75) 0%, rgba(74, 124, 42, 0.7) 100%);
+            z-index: 2;
+        }
+
+        .products-hero-content-wrapper {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out;
         }
 
         .products-hero h1 {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
+            margin-bottom: 0.8rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         .products-hero p {
             font-size: 1.1rem;
-            opacity: 0.9;
+            opacity: 0.95;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes backgroundZoom {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .products-section {
@@ -224,8 +283,17 @@
         }
 
         @media (max-width: 768px) {
+            .products-hero {
+                min-height: 250px;
+                padding: 40px 20px;
+            }
+
             .products-hero h1 {
                 font-size: 2rem;
+            }
+
+            .products-hero p {
+                font-size: 1rem;
             }
 
             .products-grid {
@@ -280,9 +348,13 @@
 
     <!-- Products Hero Section -->
     <section class="products-hero">
+        <div class="products-hero-background"></div>
+        <div class="products-hero-overlay"></div>
         <div class="container">
-            <h1>Our Products</h1>
-            <p>Quality agricultural products for modern farming</p>
+            <div class="products-hero-content-wrapper">
+                <h1>Our Products</h1>
+                <p>Quality agricultural products for modern farming</p>
+            </div>
         </div>
     </section>
 

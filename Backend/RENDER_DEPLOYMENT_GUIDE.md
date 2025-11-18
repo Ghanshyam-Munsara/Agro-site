@@ -21,7 +21,7 @@ Ensure your repository has:
 ### 2. Create Database on Render
 
 1. Log in to [Render Dashboard](https://dashboard.render.com)
-2. Click **"New +"** → **"PostgreSQL"** or **"MySQL"**
+2. Click **"New +"** → **"PostgreSQL"**
 3. Configure:
    - **Name:** `agrosite-db`
    - **Database:** `agrosite_db`
@@ -65,9 +65,9 @@ APP_DEBUG=false
 APP_URL=https://your-app-name.onrender.com
 FRONTEND_URL=https://your-frontend-domain.com
 
-DB_CONNECTION=mysql
+DB_CONNECTION=pgsql
 DB_HOST=<your-db-host>
-DB_PORT=3306
+DB_PORT=5432
 DB_DATABASE=agrosite_db
 DB_USERNAME=<your-db-username>
 DB_PASSWORD=<your-db-password>
@@ -153,9 +153,9 @@ If not using `render.yaml`, follow the manual steps above.
 
 | Variable | Description | Source |
 |----------|-------------|--------|
-| `DB_CONNECTION` | Database type | `mysql` |
+| `DB_CONNECTION` | Database type | `pgsql` |
 | `DB_HOST` | Database host | From database service |
-| `DB_PORT` | Database port | `3306` |
+| `DB_PORT` | Database port | `5432` |
 | `DB_DATABASE` | Database name | From database service |
 | `DB_USERNAME` | Database user | From database service |
 | `DB_PASSWORD` | Database password | From database service |
